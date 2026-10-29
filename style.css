@@ -1,0 +1,345 @@
+/* ==========================================================
+   Yatzy Game – Mockup Styles
+   CST3106 Lab 05
+   Colors and fonts match my portfolio site so the game
+   feels like part of the same website.
+   ========================================================== */
+
+/* ---------- Design system: colors and fonts ---------- */
+:root {
+  /* Colors */
+  --navy: #1F4E8C;        /* primary: header, headings, pips, buttons */
+  --gold: #E0A82E;        /* accent: held dice, footer link */
+  --gold-light: #FFF6E0;  /* background of a held die */
+  --charcoal: #2B2D33;    /* footer and Total row */
+  --page-bg: #F5F6F8;     /* page background */
+  --card-bg: #FFFFFF;     /* card background */
+  --text: #1F2430;        /* main body text */
+  --text-muted: #5B6270;  /* hints and labels */
+  --border: #DDE1E7;      /* card borders */
+  --row-line: #EEF0F3;    /* scorecard row dividers */
+
+  /* Fonts */
+  --font-heading: Georgia, "Times New Roman", serif;
+  --font-body: "Source Sans 3", "Segoe UI", sans-serif;
+}
+
+/* ---------- Base ---------- */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--page-bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+h1,
+h2 {
+  font-family: var(--font-heading);
+  color: var(--navy);
+  margin: 0;
+}
+
+/* ---------- Header (navy band, same as portfolio) ---------- */
+.site-header {
+  background: var(--navy);
+  padding: 24px 16px;
+}
+
+.header-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.site-header h1 {
+  color: #FFFFFF;
+  font-size: 36px;
+}
+
+.subtitle {
+  margin: 4px 0 0;
+  color: #DCE6F4;
+}
+
+.site-header a {
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+/* ---------- Main layout: board + scorecard side by side ---------- */
+.game-layout {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 32px 16px;
+  display: flex;
+  flex-wrap: wrap;      /* stacks into one column on small screens */
+  align-items: flex-start;
+  gap: 24px;
+}
+
+/* Cards use the same style as the portfolio sections:
+   white background with a navy top border */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--navy);
+  padding: 32px;
+}
+
+.game-board {
+  flex: 999 1 520px;    /* takes the wider share of the row */
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.scorecard {
+  flex: 1 1 340px;
+  min-width: 0;
+}
+
+.card h2 {
+  font-size: 28px;
+}
+
+.message {
+  margin: 8px 0 0;
+  font-size: 18px;
+}
+
+/* ---------- Dice ---------- */
+.dice-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  padding: 8px 0;
+}
+
+.die-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Each die is a button so it can be clicked (to hold it)
+   and reached with the keyboard. The face is a 3x3 grid,
+   and each pip is placed in one of the nine cells. */
+.die {
+  width: 88px;
+  height: 88px;
+  padding: 14px;
+  background: #FFFFFF;
+  border: 2px solid #C9CFD8;
+  border-radius: 14px;
+  box-shadow: 0 2px 4px rgba(43, 45, 51, 0.08);
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  place-items: center;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.die:hover {
+  border-color: var(--navy);
+}
+
+/* Held dice: gold frame, light gold face, lifted slightly */
+.die.held {
+  background: var(--gold-light);
+  border: 3px solid var(--gold);
+  transform: translateY(-4px);
+  box-shadow: 0 6px 14px rgba(31, 78, 140, 0.18);
+}
+
+.pip {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--navy);
+}
+
+/* Pip positions on the 3x3 grid */
+.pip.top-left     { grid-area: 1 / 1; }
+.pip.top-right    { grid-area: 1 / 3; }
+.pip.middle-left  { grid-area: 2 / 1; }
+.pip.center       { grid-area: 2 / 2; }
+.pip.middle-right { grid-area: 2 / 3; }
+.pip.bottom-left  { grid-area: 3 / 1; }
+.pip.bottom-right { grid-area: 3 / 3; }
+
+.die-label {
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.die-label.held-label {
+  font-weight: 700;
+  color: #7A5A12;  /* dark gold, readable on white */
+}
+
+/* ---------- Controls ---------- */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.roll-button {
+  height: 52px;
+  padding: 0 36px;
+  background: var(--navy);
+  color: #FFFFFF;
+  border: 0;
+  border-radius: 8px;
+  font: inherit;
+  font-size: 19px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.roll-button:hover {
+  background: #163B6B;
+}
+
+.roll-button:disabled {
+  background: #C9CFD8;
+  color: #3A3F48;
+  cursor: not-allowed;
+}
+
+.rolls-left {
+  padding: 8px 16px;
+  background: var(--page-bg);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.hint {
+  margin: 0;
+  font-size: 15px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* ---------- Scorecard table ---------- */
+.score-table {
+  width: 100%;
+  margin-top: 16px;
+  border-collapse: collapse;
+}
+
+.section-heading th {
+  text-align: left;
+  padding: 16px 0 8px;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  border-bottom: 2px solid var(--navy);
+}
+
+.score-table td {
+  padding: 6px 0;
+  border-bottom: 1px solid var(--row-line);
+}
+
+.score-table td:last-child {
+  text-align: right;
+}
+
+/* A box that already has a score */
+.filled-score {
+  display: inline-block;
+  min-width: 56px;
+  line-height: 44px;
+  text-align: center;
+  font-weight: 700;
+}
+
+/* An open box: shows what this roll would score.
+   Clicking it locks in the score and ends the turn. */
+.score-option {
+  min-width: 56px;
+  height: 44px;
+  background: #EAF0F8;
+  color: var(--navy);
+  border: 2px solid var(--navy);
+  border-radius: 6px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* An open box that would score zero (a "scratch") */
+.score-option.zero {
+  background: #FFFFFF;
+  color: var(--text-muted);
+  border: 1px dashed #A7AFBC;
+  font-weight: 400;
+}
+
+.subtotal-row td {
+  padding: 10px 0;
+  border-bottom: 0;
+  font-weight: 600;
+}
+
+.total-row td {
+  padding: 16px 12px;
+  background: var(--charcoal);
+  color: #FFFFFF;
+  font-size: 20px;
+  font-weight: 700;
+  border-bottom: 0;
+}
+
+.total-row td:first-child {
+  font-family: var(--font-heading);
+}
+
+/* ---------- Footer (charcoal band, same as portfolio) ---------- */
+.site-footer {
+  background: var(--charcoal);
+  color: #FFFFFF;
+  text-align: center;
+  padding: 24px 16px;
+}
+
+.site-footer a {
+  color: var(--gold);
+}
+
+/* ---------- Small screens ---------- */
+@media (max-width: 480px) {
+  .card {
+    padding: 20px;
+  }
+
+  .die {
+    width: 64px;
+    height: 64px;
+    padding: 10px;
+  }
+
+  .pip {
+    width: 10px;
+    height: 10px;
+  }
+}

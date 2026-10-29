@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yatzy Game – Mockup</title>
+
+  <!-- Body font from Google Fonts (headings use Georgia, built into every computer) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ======================================================
+       HEADER: game title, current turn, link back to portfolio
+       ====================================================== -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div>
+        <h1>Yatzy</h1>
+        <p class="subtitle">Single-player dice game · Turn 4 of 15</p>
+      </div>
+      <a href="#">← Back to portfolio</a>
+    </div>
+  </header>
+
+  <!-- ======================================================
+       MAIN: game board on the left, scorecard on the right.
+       On phones the two cards stack (see .game-layout in CSS).
+       This mockup shows a turn in progress: the player has
+       rolled 5-5-5-2-6 and is holding the three fives.
+       ====================================================== -->
+  <main class="game-layout">
+
+    <!-- ---------- GAME BOARD ---------- -->
+    <section class="card game-board">
+      <div>
+        <h2>Your roll</h2>
+        <p class="message">Click a die to hold it, then roll the rest.</p>
+      </div>
+
+      <!-- DICE: five buttons. "held" class = gold frame.
+           Pips are spans placed on a 3x3 grid by their class. -->
+      <div class="dice-row">
+
+        <!-- Die 1: five, held -->
+        <div class="die-slot">
+          <button class="die held" aria-pressed="true" aria-label="Die 1 showing 5, held">
+            <span class="pip top-left"></span>
+            <span class="pip top-right"></span>
+            <span class="pip center"></span>
+            <span class="pip bottom-left"></span>
+            <span class="pip bottom-right"></span>
+          </button>
+          <span class="die-label held-label">HELD</span>
+        </div>
+
+        <!-- Die 2: five, held -->
+        <div class="die-slot">
+          <button class="die held" aria-pressed="true" aria-label="Die 2 showing 5, held">
+            <span class="pip top-left"></span>
+            <span class="pip top-right"></span>
+            <span class="pip center"></span>
+            <span class="pip bottom-left"></span>
+            <span class="pip bottom-right"></span>
+          </button>
+          <span class="die-label held-label">HELD</span>
+        </div>
+
+        <!-- Die 3: five, held -->
+        <div class="die-slot">
+          <button class="die held" aria-pressed="true" aria-label="Die 3 showing 5, held">
+            <span class="pip top-left"></span>
+            <span class="pip top-right"></span>
+            <span class="pip center"></span>
+            <span class="pip bottom-left"></span>
+            <span class="pip bottom-right"></span>
+          </button>
+          <span class="die-label held-label">HELD</span>
+        </div>
+
+        <!-- Die 4: two, not held -->
+        <div class="die-slot">
+          <button class="die" aria-pressed="false" aria-label="Die 4 showing 2">
+            <span class="pip top-left"></span>
+            <span class="pip bottom-right"></span>
+          </button>
+          <span class="die-label">TAP TO HOLD</span>
+        </div>
+
+        <!-- Die 5: six, not held -->
+        <div class="die-slot">
+          <button class="die" aria-pressed="false" aria-label="Die 5 showing 6">
+            <span class="pip top-left"></span>
+            <span class="pip top-right"></span>
+            <span class="pip middle-left"></span>
+            <span class="pip middle-right"></span>
+            <span class="pip bottom-left"></span>
+            <span class="pip bottom-right"></span>
+          </button>
+          <span class="die-label">TAP TO HOLD</span>
+        </div>
+
+      </div>
+
+      <!-- CONTROLS: roll button and how many rolls are left this turn -->
+      <div class="controls">
+        <button class="roll-button" id="roll-button">Roll dice</button>
+        <span class="rolls-left">Rolls left: 1 of 2</span>
+      </div>
+
+      <p class="hint">Held dice keep their value when you roll. Pick a box in the scorecard to end your turn.</p>
+    </section>
+
+    <!-- ---------- SCORECARD ----------
+         Filled boxes show the score in bold.
+         Open boxes show a button with what the current roll would score. -->
+    <section class="card scorecard">
+      <h2>Scorecard</h2>
+
+      <table class="score-table">
+        <!-- Upper section: sum of the matching number -->
+        <tbody>
+          <tr class="section-heading"><th colspan="2">UPPER SECTION</th></tr>
+          <tr><td>Ones</td><td><span class="filled-score">3</span></td></tr>
+          <tr><td>Twos</td><td><span class="filled-score">6</span></td></tr>
+          <tr><td>Threes</td><td><button class="score-option zero">0</button></td></tr>
+          <tr><td>Fours</td><td><span class="filled-score">12</span></td></tr>
+          <tr><td>Fives</td><td><button class="score-option">+15</button></td></tr>
+          <tr><td>Sixes</td><td><button class="score-option">+6</button></td></tr>
+          <tr class="subtotal-row"><td>Upper total</td><td>21 / 63</td></tr>
+          <tr class="subtotal-row"><td>Bonus (63+)</td><td>0</td></tr>
+        </tbody>
+
+        <!-- Lower section: combinations -->
+        <tbody>
+          <tr class="section-heading"><th colspan="2">LOWER SECTION</th></tr>
+          <tr><td>One Pair</td><td><button class="score-option">+10</button></td></tr>
+          <tr><td>Two Pairs</td><td><button class="score-option zero">0</button></td></tr>
+          <tr><td>Three of a Kind</td><td><button class="score-option">+15</button></td></tr>
+          <tr><td>Four of a Kind</td><td><button class="score-option zero">0</button></td></tr>
+          <tr><td>Small Straight</td><td><button class="score-option zero">0</button></td></tr>
+          <tr><td>Large Straight</td><td><button class="score-option zero">0</button></td></tr>
+          <tr><td>Full House</td><td><button class="score-option zero">0</button></td></tr>
+          <tr><td>Chance</td><td><button class="score-option">+23</button></td></tr>
+          <tr><td>Yatzy</td><td><button class="score-option zero">0</button></td></tr>
+        </tbody>
+
+        <!-- Grand total -->
+        <tbody>
+          <tr class="total-row"><td>Total</td><td>21</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+  </main>
+
+  <!-- ======================================================
+       FOOTER: same as the portfolio footer
+       ====================================================== -->
+  <footer class="site-footer">
+    © 2026 Your Name | <a href="#">Back to portfolio</a>
+  </footer>
+
+</body>
+</html>
