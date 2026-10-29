@@ -1,7 +1,6 @@
 /**
- * Dice module (CST3106 Lab 6)
- * Handles rolling the dice for the Yatzy game.
- * Skeleton version: structure and intended behaviour only.
+ * Dice module (CST3106 Assignment 1)
+ * Rolls the dice and keeps track of which dice are held.
  */
 class Dice {
   /**
@@ -10,7 +9,12 @@ class Dice {
    */
   constructor(count) {
     this.count = count;  // how many dice are in this set
-    this.values = [];    // the current value of each die (filled in by rollAll)
+    this.values = [];    // the current value of each die (0 = not rolled yet)
+    this.held = [];      // true = the player is keeping this die
+    for (let i = 0; i < count; i++) {
+      this.values.push(0);
+      this.held.push(false);
+    }
   }
 
   /**
@@ -22,14 +26,33 @@ class Dice {
   }
 
   /**
-   * Rolls every die in the set and stores the results in values.
-   * @returns {number[]} The new values, for example [3, 6, 1, 6, 2].
+   * Rolls every die that is NOT held. Held dice keep their value.
+   * @returns {number[]} The new values, for example [5, 5, 5, 2, 6].
    */
   rollAll() {
-    this.values = [];  // clear the last roll so old dice don't pile up
     for (let i = 0; i < this.count; i++) {
-      this.values.push(this.roll());  // roll one die and add it to the list
+      if (!this.held[i]) {
+        this.values[i] = this.roll();  // only re-roll dice the player didn't keep
+      }
     }
     return this.values;
+  }
+
+  /**
+   * Holds a die, or lets it go if it was already held.
+   * @param {number} index - Which die, from 0 to 4.
+   */
+  toggleHold(index) {
+    this.held[index] = !this.held[index];
+  }
+
+  /**
+   * Clears the dice for a new turn: no values, nothing held.
+   */
+  reset() {
+    for (let i = 0; i < this.count; i++) {
+      this.values[i] = 0;
+      this.held[i] = false;
+    }
   }
 }
