@@ -1,42 +1,82 @@
 /**
- * YatzyGame module (CST3106 Lab 6)
- * Manages the current state of the Yatzy game.
- * Skeleton version: structure and intended behaviour only.
+ * YatzyGame module (CST3106 Assignment 1)
+ * Manages the state of a single-player Yatzy game:
+ * the dice, the score table, the current round, and the rolls left this turn.
  */
 class YatzyGame {
   /**
-   * Sets up the game state.
+   * Sets up a new game.
    */
   constructor() {
-    this.currentPlayer = 1;  // whose turn it is (single-player game, so always player 1 for now)
-    this.currentRound = 1;   // which round (turn) we're on, from 1 to 15
-    this.totalScore = 0;     // the player's total score so far
+    this.maxRounds = 15;      // one round per scorecard box
+    this.maxRolls = 3;        // rolls allowed per turn
+    this.dice = new Dice(5);  // the five dice
+    this.startNewGame();
   }
 
   /**
-   * Starts a new game.
-   * Planned: reset the round to 1, the total score to 0,
-   * and clear the score table.
+   * Starts a new game: round 1, empty score table, fresh dice.
    */
   startNewGame() {
-    // TODO: reset the game state (Assignment 1)
+    this.engine = new YatzyEngine();  // a new, empty score table
+    this.currentRound = 1;            // which round (turn) we're on, from 1 to 15
+    this.rollsLeft = this.maxRolls;   // rolls left in this turn
+    this.totalScore = 0;              // the player's total score so far
+    this.gameOver = false;
+    this.dice.reset();
   }
 
   /**
-   * Ends the current player's turn.
-   * Planned: add the turn's score to the total, move to the next round,
-   * and switch to the next player (if there is more than one).
+   * Checks whether the player has rolled at least once this turn.
+   * @returns {boolean} true after the first roll of the turn.
    */
-  endTurn() {
-    // TODO: move to the next round / player (Assignment 1)
+  hasRolled() {
+    return this.rollsLeft < this.maxRolls;
   }
 
   /**
-   * Ends the game.
-   * Planned: after round 15, add up the final score
-   * and determine the winner.
+   * Rolls the dice that aren't held, if the player has rolls left.
+   * @returns {boolean} true if the dice were rolled, otherwise false.
+   */
+  roll() {
+    if (this.gameOver || this.rollsLeft === 0) {
+      return false;
+    }
+    this.dice.rollAll();
+    this.rollsLeft--;
+    return true;
+  }
+
+  /**
+   * Ends the turn by scoring the dice in a category,
+   * then moves to the next round (or ends the game after round 15).
+   * @param {string} category - The category to score, for example "fives".
+   * @returns {number|null} The points scored, or null if the move isn't allowed.
+   */
+  endTurn(category) {
+    if (this.gameOver || !this.hasRolled() || !this.engine.isValidSelection(category)) {
+      return null;
+    }
+
+    const points = this.engine.calculateScore(category, this.dice.values);
+    this.engine.scoreTable[category] = points;          // lock in the score
+    this.totalScore = this.engine.calculateTotalScore();
+
+    if (this.currentRound === this.maxRounds) {
+      this.endGame();  // that was the last box
+    } else {
+      this.currentRound++;
+      this.rollsLeft = this.maxRolls;
+      this.dice.reset();
+    }
+    return points;
+  }
+
+  /**
+   * Ends the game, after round 15 or when the player chooses to stop.
    */
   endGame() {
-    // TODO: finalize the score and determine the winner (Assignment 1)
+    this.totalScore = this.engine.calculateTotalScore();
+    this.gameOver = true;
   }
 }
