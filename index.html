@@ -145,39 +145,41 @@
     <section class="card scorecard">
       <h2>Scorecard</h2>
 
-      <table class="score-table">
-        <!-- Upper section: sum of the matching number -->
+            <table class="score-table">
+        <!-- Upper section: sum of the matching number.
+             main.js fills each score cell (id = "score-" + category name). -->
         <tbody>
           <tr class="section-heading"><th colspan="2">UPPER SECTION</th></tr>
-          <tr><td>Ones</td><td><span class="filled-score">3</span></td></tr>
-          <tr><td>Twos</td><td><span class="filled-score">6</span></td></tr>
-          <tr><td>Threes</td><td><button class="score-option zero">0</button></td></tr>
-          <tr><td>Fours</td><td><span class="filled-score">12</span></td></tr>
-          <tr><td>Fives</td><td><button class="score-option">+15</button></td></tr>
-          <tr><td>Sixes</td><td><button class="score-option">+6</button></td></tr>
-          <tr class="subtotal-row"><td>Upper total</td><td>21 / 63</td></tr>
-          <tr class="subtotal-row"><td>Bonus (63+)</td><td>0</td></tr>
+          <tr><td>Ones</td><td id="score-ones"></td></tr>
+          <tr><td>Twos</td><td id="score-twos"></td></tr>
+          <tr><td>Threes</td><td id="score-threes"></td></tr>
+          <tr><td>Fours</td><td id="score-fours"></td></tr>
+          <tr><td>Fives</td><td id="score-fives"></td></tr>
+          <tr><td>Sixes</td><td id="score-sixes"></td></tr>
+          <tr class="subtotal-row"><td>Upper total</td><td id="upper-total">0 / 63</td></tr>
+          <tr class="subtotal-row"><td>Bonus (63+)</td><td id="bonus">0</td></tr>
         </tbody>
 
         <!-- Lower section: combinations -->
         <tbody>
           <tr class="section-heading"><th colspan="2">LOWER SECTION</th></tr>
-          <tr><td>One Pair</td><td><button class="score-option">+10</button></td></tr>
-          <tr><td>Two Pairs</td><td><button class="score-option zero">0</button></td></tr>
-          <tr><td>Three of a Kind</td><td><button class="score-option">+15</button></td></tr>
-          <tr><td>Four of a Kind</td><td><button class="score-option zero">0</button></td></tr>
-          <tr><td>Small Straight</td><td><button class="score-option zero">0</button></td></tr>
-          <tr><td>Large Straight</td><td><button class="score-option zero">0</button></td></tr>
-          <tr><td>Full House</td><td><button class="score-option zero">0</button></td></tr>
-          <tr><td>Chance</td><td><button class="score-option">+23</button></td></tr>
-          <tr><td>Yatzy</td><td><button class="score-option zero">0</button></td></tr>
+          <tr><td>One Pair</td><td id="score-onePair"></td></tr>
+          <tr><td>Two Pairs</td><td id="score-twoPairs"></td></tr>
+          <tr><td>Three of a Kind</td><td id="score-threeOfAKind"></td></tr>
+          <tr><td>Four of a Kind</td><td id="score-fourOfAKind"></td></tr>
+          <tr><td>Small Straight</td><td id="score-smallStraight"></td></tr>
+          <tr><td>Large Straight</td><td id="score-largeStraight"></td></tr>
+          <tr><td>Full House</td><td id="score-fullHouse"></td></tr>
+          <tr><td>Chance</td><td id="score-chance"></td></tr>
+          <tr><td>Yatzy</td><td id="score-yatzy"></td></tr>
         </tbody>
 
         <!-- Grand total -->
         <tbody>
-          <tr class="total-row"><td>Total</td><td>21</td></tr>
+          <tr class="total-row"><td>Total</td><td id="total-score">0</td></tr>
         </tbody>
       </table>
+
     </section>
 
   </main>

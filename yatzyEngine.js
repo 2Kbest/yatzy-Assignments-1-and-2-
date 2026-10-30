@@ -229,7 +229,52 @@ class YatzyEngine {
    * @param {string} category - The category name.
    * @returns {boolean} true if the category is open, otherwise false.
    */
-  isValidSelection(category) {
+
+
+    isValidSelection(category) {
     return this.scoreTable[category] === null;
   }
+
+  // ===== Totals =====
+
+  /**
+   * Adds up the upper section (Ones to Sixes). Unused boxes count as 0.
+   * @returns {number} The upper section total.
+   */
+  getUpperTotal() {
+    const upper = ['ones', 'twos', 'threes', 'fours', 'fives', 'sixes'];
+    let total = 0;
+    for (let i = 0; i < upper.length; i++) {
+      const score = this.scoreTable[upper[i]];
+      if (score !== null) {
+        total += score;
+      }
+    }
+    return total;
+  }
+
+  /**
+   * Upper section bonus: 50 points if Ones to Sixes add up to 63 or more.
+   * @returns {number} 50 or 0.
+   */
+  getBonus() {
+    return this.getUpperTotal() >= 63 ? 50 : 0;
+  }
+
+  /**
+   * Adds up every scored box plus the bonus (slide 14).
+   * @returns {number} The player's total score.
+   */
+  calculateTotalScore() {
+    const categories = Object.keys(this.scoreTable);
+    let total = 0;
+    for (let i = 0; i < categories.length; i++) {
+      const score = this.scoreTable[categories[i]];
+      if (score !== null) {
+        total += score;
+      }
+    }
+    return total + this.getBonus();
+  }
+
 }

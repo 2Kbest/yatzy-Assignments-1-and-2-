@@ -1,6 +1,7 @@
 /**
  * main.js (CST3106 Assignment 1)
- * Connects the Dice class to the page: rolling, holding, and drawing the dice.
+ * Connects the classes to the page: rolling, holding and drawing the dice,
+ * and scoring in the scorecard.
  */
 
 // Which pip spots to fill for each die value.
@@ -14,9 +15,10 @@ const PIP_LAYOUTS = {
   6: ['top-left', 'top-right', 'middle-left', 'middle-right', 'bottom-left', 'bottom-right']
 };
 
-const MAX_ROLLS = 3;        // Yatzy allows 3 rolls per turn
-const dice = new Dice(5);   // the five dice
-let rollsLeft = MAX_ROLLS;  // rolls left in this turn
+const MAX_ROLLS = 3;              // Yatzy allows 3 rolls per turn
+const dice = new Dice(5);         // the five dice
+const engine = new YatzyEngine(); // NEW: scoring rules and the score table
+let rollsLeft = MAX_ROLLS;        // rolls left in this turn
 
 // Page elements we update
 const rollButton = document.getElementById('roll-button');
@@ -62,7 +64,42 @@ function drawDie(index) {
 }
 
 /**
- * Redraws all five dice and the rolls-left counter.
+ * NEW: Draws the scorecard.
+ * Used boxes show their score in bold. Open boxes show a button with
+ * what the current dice would score there. Then the totals are updated.
+ */
+function drawScorecard() {
+  const categories = Object.keys(engine.scoreTable);
+  for (let i = 0; i < categories.length; i++) {
+    const category = categories[i];
+    const cell = document.getElementById('score-' + category);
+    const score = engine.scoreTable[category];
+
+    if (score !== null) {
+      // Already used: show the score in bold
+      cell.innerHTML = '<span class="filled-score">' + score + '</span>';
+    } else if (rollsLeft === MAX_ROLLS) {
+      // No roll yet this turn: nothing to preview
+      cell.innerHTML = '';
+    } else {
+      // Open: show what the current dice would score here
+      const preview = engine.calculateScore(category, dice.values);
+      if (preview > 0) {
+        cell.innerHTML = '<button class="score-option">+' + preview + '</button>';
+      } else {
+        cell.innerHTML = '<button class="score-option zero">0</button>';
+      }
+    }
+  }
+
+  // Totals (slide 14)
+  document.getElementById('upper-total').textContent = engine.getUpperTotal() + ' / 63';
+  document.getElementById('bonus').textContent = engine.getBonus();
+  document.getElementById('total-score').textContent = engine.calculateTotalScore();
+}
+
+/**
+ * Redraws the dice, the rolls-left counter and the scorecard.
  */
 function updateDisplay() {
   for (let i = 0; i < dice.count; i++) {
@@ -70,6 +107,36 @@ function updateDisplay() {
   }
   rollsLeftText.textContent = 'Rolls left: ' + rollsLeft;
   rollButton.disabled = (rollsLeft === 0);  // grey out the button when no rolls are left
+  drawScorecard();                          // NEW
+}
+
+/**
+ * NEW: Scores the current dice in a category, then starts the next turn.
+ * @param {string} category - The category name, for example "fives".
+ */
+function scoreCategory(category) {
+  if (rollsLeft === MAX_ROLLS) {
+    message.textContent = 'Roll the dice first.';
+    return;  // can't score before rolling
+  }
+  if (!engine.isValidSelection(category)) {
+    return;  // this box is already used
+  }
+
+  const points = engine.calculateScore(category, dice.values);
+  engine.scoreTable[category] = points;  // lock in the score
+  startNextTurn();
+  message.textContent = 'You scored ' + points + ' points. Roll the dice for your next turn.';
+}
+
+/**
+ * NEW: Clears the dice and gives the player 3 new rolls.
+ */
+function startNextTurn() {
+  dice.reset();
+  rollsLeft = MAX_ROLLS;
+  message.textContent = 'Roll the dice to start your turn.';
+  updateDisplay();
 }
 
 // Event listener: Roll button
@@ -81,7 +148,7 @@ rollButton.addEventListener('click', function () {
   rollsLeft--;
 
   if (rollsLeft > 0) {
-    message.textContent = 'Click a die to hold it, then roll the rest.';
+    message.textContent = 'Hold dice and roll again, or pick a box in the scorecard.';
   } else {
     message.textContent = 'No rolls left. Pick a box in the scorecard.';
   }
@@ -97,6 +164,15 @@ for (let i = 0; i < dice.count; i++) {
     }
     dice.toggleHold(i);
     drawDie(i);
+  });
+}
+
+// NEW: Event listeners: clicking a box in the scorecard scores it
+const categoryNames = Object.keys(engine.scoreTable);
+for (let i = 0; i < categoryNames.length; i++) {
+  const category = categoryNames[i];
+  document.getElementById('score-' + category).addEventListener('click', function () {
+    scoreCategory(category);
   });
 }
 
