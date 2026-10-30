@@ -38,14 +38,14 @@
     <section class="card game-board">
       <div>
         <h2>Your roll</h2>
-        <p class="message">Click a die to hold it, then roll the rest.</p>
+        <p class="message" id="message">Roll the dice to start your turn.</p>
       </div>
 
-      <!-- DICE: five buttons. "held" class = gold frame.
-           Pips are spans placed on a 3x3 grid by their class. -->
+      
+             <!-- OLD DICE from the Lab 5 mockup (kept for reference)    
       <div class="dice-row">
 
-        <!-- Die 1: five, held -->
+       
         <div class="die-slot">
           <button class="die held" aria-pressed="true" aria-label="Die 1 showing 5, held">
             <span class="pip top-left"></span>
@@ -57,7 +57,7 @@
           <span class="die-label held-label">HELD</span>
         </div>
 
-        <!-- Die 2: five, held -->
+        
         <div class="die-slot">
           <button class="die held" aria-pressed="true" aria-label="Die 2 showing 5, held">
             <span class="pip top-left"></span>
@@ -69,7 +69,7 @@
           <span class="die-label held-label">HELD</span>
         </div>
 
-        <!-- Die 3: five, held -->
+        
         <div class="die-slot">
           <button class="die held" aria-pressed="true" aria-label="Die 3 showing 5, held">
             <span class="pip top-left"></span>
@@ -81,7 +81,7 @@
           <span class="die-label held-label">HELD</span>
         </div>
 
-        <!-- Die 4: two, not held -->
+       
         <div class="die-slot">
           <button class="die" aria-pressed="false" aria-label="Die 4 showing 2">
             <span class="pip top-left"></span>
@@ -89,8 +89,9 @@
           </button>
           <span class="die-label">TAP TO HOLD</span>
         </div>
+              
 
-        <!-- Die 5: six, not held -->
+        
         <div class="die-slot">
           <button class="die" aria-pressed="false" aria-label="Die 5 showing 6">
             <span class="pip top-left"></span>
@@ -104,11 +105,35 @@
         </div>
 
       </div>
+       --> 
+            <!-- DICE: five buttons. main.js draws the pips and adds the "held" class. -->
+      <div class="dice-row">
+        <div class="die-slot">
+          <button class="die" id="die-0" aria-pressed="false" aria-label="Die 1"></button>
+          <span class="die-label" id="die-label-0"></span>
+        </div>
+        <div class="die-slot">
+          <button class="die" id="die-1" aria-pressed="false" aria-label="Die 2"></button>
+          <span class="die-label" id="die-label-1"></span>
+        </div>
+        <div class="die-slot">
+          <button class="die" id="die-2" aria-pressed="false" aria-label="Die 3"></button>
+          <span class="die-label" id="die-label-2"></span>
+        </div>
+        <div class="die-slot">
+          <button class="die" id="die-3" aria-pressed="false" aria-label="Die 4"></button>
+          <span class="die-label" id="die-label-3"></span>
+        </div>
+        <div class="die-slot">
+          <button class="die" id="die-4" aria-pressed="false" aria-label="Die 5"></button>
+          <span class="die-label" id="die-label-4"></span>
+        </div>
+      </div>
 
       <!-- CONTROLS: roll button and how many rolls are left this turn -->
       <div class="controls">
         <button class="roll-button" id="roll-button">Roll dice</button>
-        <span class="rolls-left">Rolls left: 1 of 2</span>
+        <span class="rolls-left" id="rolls-left">Rolls left: 3</span>
       </div>
 
       <p class="hint">Held dice keep their value when you roll. Pick a box in the scorecard to end your turn.</p>
