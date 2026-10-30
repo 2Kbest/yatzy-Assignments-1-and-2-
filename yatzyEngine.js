@@ -1,7 +1,6 @@
 /**
- * YatzyEngine module (CST3106 Lab 6)
+ * YatzyEngine module (CST3106 Assignment 1)
  * Handles the rules and score calculation for the Yatzy game.
- * Skeleton version: structure and intended behaviour only.
  */
 class YatzyEngine {
   /**
@@ -31,6 +30,31 @@ class YatzyEngine {
   }
 
   /**
+   * Adds up the dice that show a given number. Used by Ones to Sixes.
+   * @param {number[]} diceValues - The five dice.
+   * @param {number} number - The number to look for, from 1 to 6.
+   * @returns {number} The sum of the matching dice, for example three 4s = 12.
+   */
+  sumOf(diceValues, number) {
+    let total = 0;
+    for (let i = 0; i < diceValues.length; i++) {
+      if (diceValues[i] === number) {
+        total += number;
+      }
+    }
+    return total;
+  }
+
+  // Upper section: one scoring function per category (slide 13).
+  // Each one adds up the dice that match its number.
+  scoreOnes(diceValues)   { return this.sumOf(diceValues, 1); }
+  scoreTwos(diceValues)   { return this.sumOf(diceValues, 2); }
+  scoreThrees(diceValues) { return this.sumOf(diceValues, 3); }
+  scoreFours(diceValues)  { return this.sumOf(diceValues, 4); }
+  scoreFives(diceValues)  { return this.sumOf(diceValues, 5); }
+  scoreSixes(diceValues)  { return this.sumOf(diceValues, 6); }
+
+  /**
    * Returns the score for a category, based on the dice.
    * Planned rules:
    *  - Ones to Sixes: add up the dice that match the number.
@@ -43,9 +67,16 @@ class YatzyEngine {
    * @returns {number} The score for that category.
    */
   calculateScore(category, diceValues) {
-    //looks at a category and the dice values and returns the score for that category.
-    // TODO: implement the scoring rules above (Assignment 1)
-    return 0;
+    // Looks at a category and the dice values and returns the score for that category.
+    switch (category) {
+      case 'ones':   return this.scoreOnes(diceValues);
+      case 'twos':   return this.scoreTwos(diceValues);
+      case 'threes': return this.scoreThrees(diceValues);
+      case 'fours':  return this.scoreFours(diceValues);
+      case 'fives':  return this.scoreFives(diceValues);
+      case 'sixes':  return this.scoreSixes(diceValues);
+      default:       return 0;  // lower section comes in Step 3B
+    }
   }
 
   /**
@@ -59,7 +90,7 @@ class YatzyEngine {
    * @returns {boolean} true if the selection is valid, otherwise false.
    */
   isValidSelection(category, diceValues) {
-    // TODO: implement the checks above (Assignment 1)
+    // TODO: implement the checks above (Step 3B)
     return true;
   }
 }
