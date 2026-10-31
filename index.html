@@ -20,7 +20,7 @@
     <div class="header-inner">
       <div>
         <h1>Yatzy</h1>
-        <p class="subtitle">Single-player dice game · Turn 4 of 15</p>
+        <p class="subtitle">Single-player dice game · Turn <span id="turn-number">1</span> of 15</p>
       </div>
       <a href="#">← Back to portfolio</a>
     </div>
@@ -130,13 +130,20 @@
         </div>
       </div>
 
-      <!-- CONTROLS: roll button and how many rolls are left this turn -->
+            <!-- CONTROLS: roll, end turn, and how many rolls are left this turn -->
       <div class="controls">
         <button class="roll-button" id="roll-button">Roll dice</button>
+        <button class="roll-button" id="end-turn-button">End turn</button>
         <span class="rolls-left" id="rolls-left">Rolls left: 3</span>
       </div>
 
-      <p class="hint">Held dice keep their value when you roll. Pick a box in the scorecard to end your turn.</p>
+            <p class="hint">Held dice keep their value when you roll. Pick a box in the scorecard, then click End turn.</p>
+
+      <!-- GAME ACTIONS: stop early or start over -->
+      <div class="game-actions">
+        <button class="secondary-button" id="end-game-button">End game</button>
+        <button class="secondary-button" id="new-game-button">New game</button>
+      </div>
     </section>
 
     <!-- ---------- SCORECARD ----------

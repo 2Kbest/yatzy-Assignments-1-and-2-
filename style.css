@@ -343,3 +343,34 @@ h2 {
     height: 10px;
   }
 }
+/* ===== Assignment 1 additions ===== */
+
+/* The scorecard box the player picked, waiting for End turn */
+.score-option.selected {
+  outline: 3px solid #d4a017;
+  outline-offset: 2px;
+}
+
+/* End game / New game buttons: smaller and outlined,
+   so they don't compete with Roll dice and End turn */
+.game-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.secondary-button {
+  padding: 8px 16px;
+  border: 2px solid #1f4e8c;
+  border-radius: 8px;
+  background: #fff;
+  color: #1f4e8c;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.secondary-button:hover {
+  background: #eef3fa;
+}
