@@ -117,8 +117,10 @@ function updateDisplay() {
   turnNumber.textContent = game.currentRound;
 
   // Buttons only work when they make sense
+    // Buttons only work when they make sense
   rollButton.disabled = game.gameOver || game.rollsLeft === 0;
   endTurnButton.disabled = game.gameOver || selectedCategory === null;
+  endGameButton.disabled = game.gameOver;
 
   drawScorecard();
 }

@@ -374,3 +374,10 @@ h2 {
 .secondary-button:hover {
   background: #eef3fa;
 }
+/* End game when the game is already over */
+.secondary-button:disabled {
+  border-color: #c5cbd6;
+  color: #9aa3b2;
+  background: #fff;
+  cursor: not-allowed;
+}
