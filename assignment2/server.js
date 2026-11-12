@@ -25,6 +25,23 @@ app.get('/api/game', function (req, res) {
   res.json(game.getState());
 });
 
+// POST /api/roll: roll the dice that aren't held
+app.post('/api/roll', function (req, res) {
+  if (!game.roll()) {
+    return res.status(400).json({ error: 'Cannot roll: no rolls left, or the game is over.' });
+  }
+  res.json(game.getState());
+});
+
+// PUT /api/dice/:index/hold: hold a die, or let it go (index 0 to 4)
+app.put('/api/dice/:index/hold', function (req, res) {
+  const index = Number(req.params.index);  // "2" from the address becomes the number 2
+  if (!game.toggleHold(index)) {
+    return res.status(400).json({ error: 'Cannot hold that die: roll first, and use an index from 0 to 4.' });
+  }
+  res.json(game.getState());
+});
+
 // Start the server
 app.listen(PORT, function () {
   console.log('Yatzy server running at http://localhost:' + PORT);

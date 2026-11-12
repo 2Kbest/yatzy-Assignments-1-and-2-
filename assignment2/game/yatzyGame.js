@@ -53,6 +53,22 @@ class YatzyGame {
     return true;
   }
 
+    /**
+   * Holds a die, or lets it go, if that's allowed right now.
+   * @param {number} index - Which die, from 0 to 4.
+   * @returns {boolean} true if it worked, otherwise false.
+   */
+  toggleHold(index) {
+    if (this.gameOver || !this.hasRolled()) {
+      return false;  // nothing to hold before the first roll, or after the game ends
+    }
+    if (!Number.isInteger(index) || index < 0 || index >= this.dice.count) {
+      return false;  // not a real die
+    }
+    this.dice.toggleHold(index);
+    return true;
+  }
+
   /**
    * Ends the turn by scoring the dice in a category,
    * then moves to the next round (or ends the game after round 15).
