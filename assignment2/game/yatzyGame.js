@@ -85,6 +85,38 @@ class YatzyGame {
     this.totalScore = this.engine.calculateTotalScore();
     this.gameOver = true;
   }
+    /**
+   * Packs the whole game into one plain object, ready to send as JSON.
+   * The page uses it to draw the dice, the scorecard and the buttons.
+   * @returns {object} The current game state.
+   */
+  getState() {
+    // What each open box would score with the current dice (only after a roll)
+    const previews = {};
+    if (this.hasRolled() && !this.gameOver) {
+      const categories = Object.keys(this.engine.scoreTable);
+      for (let i = 0; i < categories.length; i++) {
+        const category = categories[i];
+        if (this.engine.isValidSelection(category)) {
+          previews[category] = this.engine.calculateScore(category, this.dice.values);
+        }
+      }
+    }
+
+    return {
+      dice: this.dice.values,
+      held: this.dice.held,
+      rollsLeft: this.rollsLeft,
+      currentRound: this.currentRound,
+      maxRounds: this.maxRounds,
+      scoreTable: this.engine.scoreTable,
+      upperTotal: this.engine.getUpperTotal(),
+      bonus: this.engine.getBonus(),
+      totalScore: this.engine.calculateTotalScore(),
+      previews: previews,
+      gameOver: this.gameOver
+    };
+  }
 }
 
    // Share this class with other files (server.js loads it with require)
