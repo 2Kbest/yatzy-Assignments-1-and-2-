@@ -42,6 +42,17 @@ app.put('/api/dice/:index/hold', function (req, res) {
   res.json(game.getState());
 });
 
+// POST /api/score: score the dice in a category, then start the next turn
+// The page sends JSON like { "category": "sixes" }
+app.post('/api/score', function (req, res) {
+  const category = req.body && req.body.category;  // undefined if nothing was sent
+  const points = game.endTurn(category);
+  if (points === null) {
+    return res.status(400).json({ error: 'Cannot score there: roll first, and pick an open category.' });
+  }
+  res.json(game.getState());
+});
+
 // Start the server
 app.listen(PORT, function () {
   console.log('Yatzy server running at http://localhost:' + PORT);
