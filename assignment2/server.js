@@ -53,6 +53,21 @@ app.post('/api/score', function (req, res) {
   res.json(game.getState());
 });
 
+// POST /api/end-game: end the game early (the player chooses to stop)
+app.post('/api/end-game', function (req, res) {
+  if (game.gameOver) {
+    return res.status(400).json({ error: 'The game is already over.' });
+  }
+  game.endGame();
+  res.json(game.getState());
+});
+
+// DELETE /api/game: throw away the current game and start a new one
+app.delete('/api/game', function (req, res) {
+  game.startNewGame();
+  res.json(game.getState());
+});
+
 // Start the server
 app.listen(PORT, function () {
   console.log('Yatzy server running at http://localhost:' + PORT);
