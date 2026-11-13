@@ -100,6 +100,8 @@ class YatzyGame {
   endGame() {
     this.totalScore = this.engine.calculateTotalScore();
     this.gameOver = true;
+     this.rollsLeft = 0;   // no more rolls once the game is over
+    this.dice.reset();    // clear the dice: nothing left to roll or hold
   }
     /**
    * Packs the whole game into one plain object, ready to send as JSON.

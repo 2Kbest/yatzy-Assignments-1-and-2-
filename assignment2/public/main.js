@@ -262,6 +262,13 @@ async function start() {
   if (!(await update('GET', '/api/game'))) {
     return;  // server not reachable: the message already says so
   }
+  
+  // Show a message that matches the game we got back (useful after a refresh)
+  if (state.gameOver) {
+    showGameOver();
+  } else if (Object.keys(state.previews).length > 0) {
+    message.textContent = 'Welcome back! Hold dice and roll again, or pick a box in the scorecard.';
+  }
   const categoryNames = Object.keys(state.scoreTable);
   for (let i = 0; i < categoryNames.length; i++) {
     const category = categoryNames[i];
